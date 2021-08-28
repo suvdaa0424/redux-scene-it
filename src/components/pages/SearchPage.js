@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState } from 'react'
 import { Button, Card, Container } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { actionSaveMovie } from '../../redux/actions/favorites'
+import { actionSetSearch } from '../../redux/actions/search'
 import Header from '../Header'
 
 function SearchPage() {
@@ -10,8 +11,9 @@ function SearchPage() {
     const dispatch = useDispatch()
     
     const [movies, setMovies] = useState([])
-    const [input, setInput] = useState('')
-    const uriInput = encodeURI(input)
+    // const [input, setInput] = useState('') iim bsaniig doorh code-r solison
+    const search = useSelector((state) => state.search)
+    const uriInput = encodeURI(search)
     
     function handleSave(movie) {
         dispatch(actionSaveMovie(movie))
@@ -36,8 +38,8 @@ function SearchPage() {
                 <label>
                     Search Movies: &nbsp;
                     <input
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        value={search}
+                        onChange={(e) => dispatch(actionSetSearch(e.target.value))}
                     />
                 </label>
                 
